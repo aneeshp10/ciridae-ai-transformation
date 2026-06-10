@@ -2,6 +2,10 @@
 
 This project parses Ciridae AI Transformation Opportunity Scan PDFs, converts company-level AI profiles into workflow-level automation hypotheses, and aggregates reusable kit categories across PE portfolio companies.
 
+## Why This Exists
+
+Ciridae deploys reusable workflow kits across PE portfolio companies. This analysis identifies which kit categories appear most frequently across Aquiline, Bain, and Blackstone portfolios — giving a data-driven answer to the question: what should we build once and deploy everywhere?
+
 ## Key Files
 
 - `src/run_workflow_analysis.py` parses the PDFs and writes company-level and kit-level analysis outputs.
