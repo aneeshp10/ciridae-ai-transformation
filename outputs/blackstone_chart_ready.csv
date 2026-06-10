@@ -1,0 +1,16 @@
+kit_category,unique_company_count,unique_fund_count,avg_deployment_readiness_score,avg_kit_potential_score,reusable_kit_priority_score,example_companies
+Analytics / Executive Intelligence Kit,56,1,4.32,4.98,1205.68,"Ags Health, Allied Benefit Systems, Murka, Citrin Cooperman, Ascend Learning"
+Forecasting / Optimization Kit,57,1,4.12,4.93,1158.51,"Murka, Digital Media Solutions, Med Imagem, Engineers Gate, Energy Exemplar"
+Compliance / Audit Trail Kit,52,1,4.4,4.96,1136.19,"Allied Benefit Systems, Citrin Cooperman, Ascend Learning, Taskus, Cmic"
+Knowledge / Policy RAG Kit,42,1,4.38,5.0,920.0,"Ags Health, Nightwing Group, Aqua Finance, Citrin Cooperman, Alacritec Solutions"
+Workflow Orchestration Kit,37,1,4.46,4.95,816.08,"Nightwing Group, Aqua Finance, Ascend Learning, Mphasis, Sii Belgium"
+Scheduling / Dispatch / Capacity Kit,39,1,4.15,4.79,776.77,"Ags Health, Alacritec Solutions, Sii Belgium, Med Imagem, Westwood Professional Services"
+Sales / Marketing Personalization Kit,28,1,4.18,5.0,585.0,"Murka, Digital Media Solutions, Simplilearn, Personify Health, Ellucian"
+Software Delivery Automation Kit,26,1,4.31,4.85,542.77,"Murka, Mphasis, Sii Belgium, Iq-Eq, Ancestry"
+Field / Physical Ops Assist Kit,17,1,4.12,4.71,329.41,"Luminator Technology Group, Copeland, Chamberlain Group, Legence, Stow Group"
+Document Intake & Extraction Kit,12,1,4.58,5.0,275.0,"Aqua Finance, Cmic, Incenter Lender Services, Ace Insurance Brokers, Energy Exemplar"
+Customer Support / Contact Center Kit,13,1,4.23,5.0,275.0,"Allied Benefit Systems, Mphasis, Taskus, Atlantic Union Bank, Direct Atp Global Travel"
+R&D / Scientific Intelligence Kit,10,1,4.5,4.8,216.0,"Cmic, Precision Medicine Group, I'Rom Group, Hologic, Nucleus Network"
+Data Reconciliation Kit,10,1,4.3,4.9,210.7,"Iq-Eq, I'Rom Group, Ancestry, Direct Atp Global Travel, Cvent"
+Claims / Payment / Revenue Cycle Kit,9,1,4.56,5.0,205.0,"Ags Health, Allied Benefit Systems, Aqua Finance, Citrin Cooperman, Alacritec Solutions"
+Agentic Transaction / Trust Kit,1,1,5.0,5.0,25.0,Ancestry

@@ -1,0 +1,271 @@
+You are analyzing Ciridae AI Transformation Opportunity Scan PDFs for 
+private-equity portfolio companies.
+
+You will be provided one or more PDFs as input. Each PDF covers all 
+portfolio companies under a single PE fund.
+
+GOAL:
+Convert company-level AI opportunity profiles into workflow-level 
+automation hypotheses, then aggregate across all companies to identify 
+which reusable Ciridae kit categories appear most frequently and have 
+the strongest build-first case.
+
+The primary output is a kit-level frequency and reusability analysis — 
+not a company ranking. Do not pre-filter companies by any score. 
+Include all companies from all PDFs. The goal is maximum coverage 
+so that kit co-occurrence signal is not lost.
+
+IMPORTANT CONTEXT:
+- The same company may appear in multiple fund PDFs
+- Deduplicate at the company level but preserve all associated funds
+- Do not count the same company twice when aggregating kit frequency
+- Treat workflow automations as hypotheses inferred from profiles, 
+  not confirmed customer needs
+- Use only information supported by the company profile text
+- Prefer concrete workflows over vague labels like "AI transformation" 
+  or "automation"
+- The purpose is to answer: "What reusable workflow systems could 
+  Ciridae build once and deploy across many PE portfolio companies?"
+
+---
+
+STEP 1: EXTRACT ALL COMPANIES
+
+For each PDF, extract every company profile. For each company extract:
+- company_name
+- fund_name (from PDF source)
+- vertical
+- industry
+- ai_score
+- durability_score
+- opportunity_score
+- overview (one sentence summary)
+- executive_summary
+- durability_rationale
+- opportunity_rationale
+- ai_applicability_description
+- ai_initiatives (named programs, platforms, or tools if present; 
+  null if none mentioned)
+
+Do not filter or rank at this stage. Extract all companies.
+
+---
+
+STEP 2: DEDUPLICATE COMPANIES
+
+- If two company names clearly refer to the same entity, merge into 
+  one record
+- Preserve all associated funds in associated_funds as an array
+- Preserve source PDF references in source_documents
+- If uncertain whether two records are the same company, do not merge. 
+  Add both to a possible_duplicates list with a note explaining 
+  the uncertainty
+- Use judgment, not string matching rules
+
+---
+
+STEP 3: FOR EACH UNIQUE COMPANY, INFER WORKFLOW AUTOMATION HYPOTHESES
+
+For each company output:
+
+1. company_name
+2. normalized_company_name
+3. associated_funds (array)
+4. source_documents (array)
+5. vertical
+6. industry
+7. ai_score
+8. durability_score
+9. opportunity_score
+10. business_model_summary: one sentence describing how the company 
+    makes money
+11. durable_control_point: the single most accurate descriptor of 
+    what this company owns that AI cannot easily bypass. Choose one: 
+    system-of-record | regulatory-license | physical-asset | 
+    proprietary-data | customer-relationship | workflow-embedding | IP
+12. workflow_surfaces: 3-6 areas of the business where AI could apply, 
+    grounded in the profile text
+13. top_workflow_automation_hypotheses: 2-4 concrete workflow 
+    automations this company may benefit from. Be specific — name 
+    the workflow, not just the category
+14. likely_workflow_owner: the single most likely buyer or user of 
+    the automation. Choose one: COO | CFO | CTO | CPO | 
+    Head of Claims | Head of RCM | Head of Support | 
+    Compliance Lead | Product Lead | Operations Lead
+15. reusable_kit_categories: 1-4 categories from the taxonomy below. 
+    Only assign a category if supported by profile text
+16. kit_reuse_rationale: one sentence explaining why these kits could 
+    apply beyond this specific company
+17. deployment_readiness_score: integer 1-5 using these anchors:
+    1 = no existing systems, unclear workflows, no AI maturity
+    2 = early tooling, workflows partially defined, limited data
+    3 = some existing software, moderate workflow clarity, some data
+    4 = clear workflows, good data infrastructure, some AI in place
+    5 = production AI already deployed, clear workflows, strong 
+        data infrastructure
+18. deployment_readiness_rationale: one sentence grounded in 
+    profile evidence
+19. kit_potential_score: integer 1-5 using these anchors:
+    1 = highly bespoke, unlikely to generalize
+    2 = some reuse potential but narrow vertical
+    3 = reusable within a vertical
+    4 = reusable across multiple verticals
+    5 = horizontal — applies across nearly any PE portfolio company
+20. kit_potential_rationale: one sentence explaining the 
+    generalizability judgment
+21. risk_level: low | medium | high
+22. human_in_loop_need: low | medium | high
+23. confidence: low | medium | high — reflecting how much profile 
+    text supports the workflow hypotheses
+
+---
+
+REUSABLE KIT TAXONOMY:
+
+Document Intake & Extraction Kit
+  PDFs, emails, forms, invoices, claims, contracts, 
+  clinical/regulatory documents
+
+Workflow Orchestration Kit
+  State management, routing, task queues, retries, 
+  approvals, SLAs, notifications
+
+Human Review & Approval Kit
+  Confidence thresholds, review queues, source evidence, 
+  edit tracking, escalation
+
+Compliance / Audit Trail Kit
+  Regulatory workflows, evidence logging, traceability, 
+  permissions, audit history
+
+Claims / Payment / Revenue Cycle Kit
+  Claims adjudication, denial management, payment integrity, 
+  prior authorization, collections
+
+Scheduling / Dispatch / Capacity Kit
+  Field service scheduling, clinician scheduling, 
+  appointment management, resource allocation
+
+Customer Support / Contact Center Kit
+  Ticket triage, call summarization, voice agent workflows, 
+  deflection, escalation
+
+Knowledge / Policy RAG Kit
+  Internal policy search, SOP lookup, case data querying, 
+  regulatory interpretation
+
+Data Reconciliation Kit
+  Matching records across systems, invoice-vs-PO, 
+  claim-vs-policy, duplicate detection
+
+Forecasting / Optimization Kit
+  Demand forecasting, inventory optimization, 
+  pricing/yield optimization, churn prediction
+
+Sales / Marketing Personalization Kit
+  Customer segmentation, campaign personalization, 
+  next-best-action, retention workflows
+
+R&D / Scientific Intelligence Kit
+  Target discovery, trial design, molecule optimization, 
+  literature synthesis, experiment prioritization
+
+Software Delivery Automation Kit
+  Requirements, code generation, testing, documentation, 
+  implementation services automation
+
+Analytics / Executive Intelligence Kit
+  Dashboards, anomaly detection, KPI summaries, 
+  margin/cash-flow visibility, operating insights
+
+Field / Physical Ops Assist Kit
+  Technician copilots, maintenance diagnostics, 
+  field documentation, inspection workflows
+
+Agentic Transaction / Trust Kit
+  Digital identity, e-signature, agent delegation, 
+  verified transactions, autonomous compliance workflows
+
+Other
+  Use only when no category fits. Explain why.
+
+---
+
+STEP 4: AGGREGATE ACROSS ALL UNIQUE COMPANIES
+
+For each reusable_kit_category that appears at least once, compute:
+
+1. kit_category
+2. unique_company_count: number of deduplicated companies 
+   assigned this kit
+3. unique_fund_count: number of distinct funds represented 
+   across those companies
+4. company_fund_exposure_count: sum of all company-fund pairs 
+   (i.e. if one company appears in 2 funds, count as 2)
+5. avg_opportunity_score: mean opportunity_score across 
+   companies in this kit
+6. avg_deployment_readiness_score: mean deployment_readiness_score
+7. avg_kit_potential_score: mean kit_potential_score
+8. avg_human_in_loop_need: mean, mapping low=1, medium=2, high=3
+9. avg_confidence_weight: mean confidence, mapping 
+   high=1.0, medium=0.7, low=0.4
+10. example_companies: 3-5 representative company names
+11. why_this_kit_matters: one sentence on why this kit is 
+    strategically valuable for Ciridae
+
+---
+
+STEP 5: CALCULATE REUSABLE KIT PRIORITY SCORE
+
+For each kit category:
+
+Reusable Kit Priority Score = 
+  unique_company_count 
+  × avg_deployment_readiness_score 
+  × avg_kit_potential_score 
+  × avg_confidence_weight
+
+Sort the aggregation table by Reusable Kit Priority Score descending.
+
+---
+
+STEP 6: OUTPUT FORMAT
+
+Return the following in order:
+
+A. JSON array of company-level records (Step 3 fields)
+
+B. JSON array of kit-level aggregation records (Step 4 fields) 
+   including reusable_kit_priority_score, sorted descending
+
+C. Chart-ready table with columns:
+   - kit_category
+   - unique_company_count
+   - unique_fund_count
+   - avg_deployment_readiness_score
+   - avg_kit_potential_score
+   - reusable_kit_priority_score
+   - example_companies (comma-separated)
+
+D. Executive summary: 4-6 sentences leading with the single most 
+   actionable insight for a PE-focused AI transformation firm. Cover:
+   - Which workflow kits appear most frequently across the portfolio
+   - Which kits score highest on both deployability and reusability
+   - Which company archetypes are the strongest Ciridae fit
+   - Any meaningful differences across funds
+   - Any duplicate companies found across PDFs
+
+E. possible_duplicates list: company pairs that may be the same 
+   entity but were not auto-merged, with a one-sentence note 
+   on the uncertainty
+
+---
+
+CONSTRAINTS:
+- Do not filter any companies before Step 3
+- Do not assign kit categories not supported by profile text
+- Do not merge companies unless clearly the same entity
+- Choose single values (not lists) for durable_control_point 
+  and likely_workflow_owner
+- All scores must use the defined anchors, not free-form judgment
+- Ground all workflow hypotheses in profile text evidence
