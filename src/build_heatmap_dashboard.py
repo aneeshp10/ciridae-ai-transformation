@@ -119,6 +119,7 @@ def render_html(data: dict) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ciridae Workflow Kit Heatmap</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {{
       --bg: #f7f7f4;
